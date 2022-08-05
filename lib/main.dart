@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import './widgets/calculator_button.dart';
 
 void main() {
@@ -22,63 +23,68 @@ class _CalculatorAppState extends State<CalculatorApp> {
   late String operation;
 
   void btnOnClick(String btnValue) {
-    print(btnValue);
-    if (btnValue == 'C') {
-      textToDisplay = ' ';
-      firstNum = 0;
-      secondNum = 0;
-      res = '';
-    } else if (btnValue == 'AC') {
-      textToDisplay = '';
-      firstNum = 0;
-      secondNum = 0;
-      res = '';
-      history = '';
-    } else if (btnValue == '+/-') {
-      if (textToDisplay[0] != '-') {
-        res = '-$textToDisplay';
-      } else {
-        res = textToDisplay.substring(1);
-      }
-    }
-    else if (btnValue == '<') {
-      res = textToDisplay.substring(0, textToDisplay.length - 1);
-    }
-    else if (btnValue == '+' ||
-        btnValue == '-' ||
-        btnValue == 'X' ||
-        btnValue == '/') {
-      firstNum = int.parse(textToDisplay);
-      res = '';
-      operation = btnValue;
-    } else if (btnValue == '=') {
-      secondNum = int.parse(textToDisplay);
-      if (operation == '+') {
-        res = (firstNum + secondNum).toString();
-        history =
-            firstNum.toString() + operation.toString() + secondNum.toString();
-      }
-      if (operation == '-') {
-        res = (firstNum - secondNum).toString();
-        history =
-            firstNum.toString() + operation.toString() + secondNum.toString();
-      }
-      if (operation == 'X') {
-        res = (firstNum * secondNum).toString();
-        history =
-            firstNum.toString() + operation.toString() + secondNum.toString();
-      }
-      if (operation == '/') {
-        res = (firstNum / secondNum).toString();
-        history =
-            firstNum.toString() + operation.toString() + secondNum.toString();
-      } else {
+    switch (btnValue) {
+      case 'C':
+        textToDisplay = ' ';
+        firstNum = 0;
+        secondNum = 0;
+        res = '';
+        break;
+      case 'AC':
+        textToDisplay = '';
+        firstNum = 0;
+        secondNum = 0;
+        res = '';
+        break;
+      case '+/-':
+        if (textToDisplay[0] != '-') {
+          res = '-$textToDisplay';
+        } else {
+          res = textToDisplay.substring(1);
+        }
+        break;
+      case '<':
+        res = textToDisplay.substring(0, textToDisplay.length - 1);
+        break;
+      case '+':
+      case '-':
+      case 'X':
+      case '/':
+        firstNum = int.parse(textToDisplay);
+        res = '';
+        operation = btnValue;
+        break;
+      case '=':
+        secondNum = int.parse(textToDisplay);
+        if (operation == '+') {
+          res = (firstNum + secondNum).toString();
+          history =
+              firstNum.toString() + operation.toString() + secondNum.toString();
+        }
+        if (operation == '-') {
+          res = (firstNum - secondNum).toString();
+          history =
+              firstNum.toString() + operation.toString() + secondNum.toString();
+        }
+        if (operation == 'X') {
+          res = (firstNum * secondNum).toString();
+          history =
+              firstNum.toString() + operation.toString() + secondNum.toString();
+        }
+        if (operation == '/') {
+          res = (firstNum / secondNum).toString();
+          history =
+              firstNum.toString() + operation.toString() + secondNum.toString();
+        }
+        break;
+
+      default:
         res = int.parse(textToDisplay + btnValue).toString();
-      }
-      setState(() {
-        textToDisplay = res;
-      });
+        break;
     }
+    setState(() {
+      textToDisplay = res;
+    });
   }
 
   @override
